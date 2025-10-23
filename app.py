@@ -126,4 +126,4 @@ def setup_demo_data():
             print("--- Demo data already exists. Skipping setup. ---")
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
