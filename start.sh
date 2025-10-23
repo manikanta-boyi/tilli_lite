@@ -1,17 +1,17 @@
 #!/usr/bin/env bash
 
 # 1. Database Initialization
-# Run the Python code to create the database tables (db.create_all())
-# We use the full path to python and gunicorn for reliability on Render.
-echo "Creating database tables via Flask app context..."
-python -c "from app import create_app; app = create_app(); with app.app_context(): from app import db; db.create_all()"
+echo "Running database setup script (db_setup.py)..."
+# Call the dedicated Python script to initialize the DB schema
+python db_setup.py
 
 # Check if the database creation was successful
 if [ $? -ne 0 ]; then
-    echo "Database initialization FAILED."
+    echo "Database initialization FAILED. Exiting deployment."
     exit 1
 fi
 
 # 2. Start Gunicorn Web Server
 echo "Starting Gunicorn server..."
+# The 'exec' command replaces the shell process with Gunicorn, which is efficient.
 exec gunicorn app:app --bind 0.0.0.0:$PORT
