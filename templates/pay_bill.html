@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="bg-white p-8 rounded-xl shadow-xl max-w-lg mx-auto">
+    <h2 class="text-3xl font-bold text-gray-900 mb-6 border-b pb-3">Monay: Simulated Payment</h2>
+    <p class="text-gray-600 mb-4">You are paying Bill #{{ bill.id }}.</p>
+    <div class="bg-red-50 p-4 rounded-lg border border-red-200 mb-6">
+        <p class="text-xl font-bold text-red-700">Amount Due: ${{ "{:,.2f}".format(bill.amount_due) }}</p>
+        <p class="text-sm text-red-600">Due Date: {{ bill.due_date.strftime('%B %d, %Y') }}</p>
+    </div>
+
+    <form method="POST" class="space-y-4">
+        {{ form.hidden_tag() }}
+
+        <div>
+            {{ form.amount_to_pay.label(class="block text-sm font-medium text-gray-700") }}
+            {{ form.amount_to_pay(class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-sky-500 focus:ring-sky-500 p-2") }}
+            {% for error in form.amount_to_pay.errors %}
+                <span class="text-red-500 text-xs">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div>
+            {{ form.payment_method_type.label(class="block text-sm font-medium text-gray-700") }}
+            {{ form.payment_method_type(class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-sky-500 focus:ring-sky-500 p-2") }}
+        </div>
+        
+        <div>
+            {{ form.simulated_card.label(class="block text-sm font-medium text-gray-700") }}
+            {{ form.simulated_card(class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-sky-500 focus:ring-sky-500 p-2", placeholder="16-digit simulated number") }}
+            {% for error in form.simulated_card.errors %}
+                <span class="text-red-500 text-xs">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="pt-4">
+            <p class="text-xs text-gray-500 mb-2 italic">
+                *Note: This is a simulation. Upon submission, the transaction will be logged (Monay) and a communication will be recorded (Nudge).
+            </p>
+            {{ form.submit(class="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition cursor-pointer") }}
+        </div>
+    </form>
+</div>
+{% endblock %}

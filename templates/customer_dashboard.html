@@ -1,0 +1,81 @@
+{% extends "layout.html" %}
+{% block title %}tilliX Customer Dashboard{% endblock %}
+
+{% block content %}
+<div class="container mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
+    
+    <div class="lg:col-span-2 space-y-8">
+        <h1 class="text-3xl font-extrabold text-gray-900">tilliX: Customer Dashboard</h1>
+
+        <div class="grid grid-cols-2 gap-6 bg-white p-6 rounded-2xl shadow-xl border border-gray-100">
+            <div class="border-r border-gray-200 pr-6">
+                <p class="text-sm font-medium uppercase text-gray-500 mb-1">Account Holder</p>
+                <p class="text-xl font-bold text-gray-800">{{ account.full_name }}</p>
+            </div>
+            <div>
+                <p class="text-sm font-medium uppercase text-gray-500 mb-1">Account Number</p>
+                <p class="text-xl font-bold text-gray-800">{{ account.account_number }}</p>
+            </div>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl shadow-xl border border-gray-100">
+            <h2 class="text-xl font-bold text-gray-800 mb-4">Total Outstanding Balance</h2>
+            <div class="flex justify-between items-end">
+                <p class="text-5xl font-extrabold text-red-600">${{ "%.2f"|format(total_due) }}</p>
+                <a href="{{ url_for('main.bill_list') }}" class="text-lg font-semibold bg-sky-600 hover:bg-sky-700 text-white py-2 px-6 rounded-xl transition shadow-lg">
+                    Pay Now
+                </a>
+            </div>
+            <p class="text-sm text-gray-500 mt-2">View all bills and transactions in the Bills & Payments tab.</p>
+        </div>
+        
+        <div class="bg-white p-6 rounded-2xl shadow-xl border border-gray-100">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4 flex justify-between items-center">
+                Active Service Requests
+                <a href="{{ url_for('main.submit_request') }}" class="text-sm font-semibold text-green-600 hover:text-green-700 flex items-center transition">
+                    + Submit New
+                </a>
+            </h2>
+            <ul class="space-y-4">
+                {% for request in requests %}
+                <li class="p-3 bg-gray-50 rounded-lg border-l-4 border-green-500">
+                    <p class="font-semibold text-gray-700">{{ request.request_type }}</p>
+                    <p class="text-sm text-gray-500 truncate">{{ request.description }}</p>
+                    <p class="text-xs font-medium mt-1">Status: <span class="text-green-700">{{ request.status }}</span> | Submitted: {{ request.submission_date.strftime('%Y-%m-%d') }}</p>
+                </li>
+                {% else %}
+                <li class="text-gray-500 p-3 bg-gray-50 rounded-lg">You currently have no open service requests.</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+    </div>
+    
+    <div class="lg:col-span-1">
+        <div class="bg-white p-6 rounded-2xl shadow-xl border border-gray-100 sticky top-24">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Nudge: Communication Log</h2>
+            <p class="text-sm text-gray-500 mb-4">Messages logged based on your preference: <span class="font-semibold text-purple-600">{{ account.comm_preference }}</span></p>
+
+            <div class="space-y-4 max-h-96 overflow-y-auto pr-2">
+                {% for comm in comms %}
+                <div class="border-l-4 p-3 rounded-lg 
+                    {% if 'Success' in comm.trigger_event %} border-green-500 bg-green-50 
+                    {% elif 'Bill' in comm.trigger_event %} border-blue-500 bg-blue-50 
+                    {% else %} border-gray-300 bg-gray-50 {% endif %}">
+                    <p class="text-xs text-gray-500">{{ comm.timestamp.strftime('%Y-%m-%d %H:%M') }} | <span class="font-bold">{{ comm.channel }}</span></p>
+                    <p class="font-semibold 
+                        {% if 'Success' in comm.trigger_event %} text-green-700 
+                        {% elif 'Bill' in comm.trigger_event %} text-blue-700 
+                        {% else %} text-gray-800 {% endif %}">
+                        {{ comm.trigger_event }}
+                    </p>
+                    <p class="text-sm text-gray-600 mt-1">{{ comm.message_body }}</p>
+                </div>
+                {% else %}
+                <p class="text-gray-500 text-sm p-3 bg-gray-50 rounded-lg">No recent communication history found.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

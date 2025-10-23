@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tilli-Lite | {{ title }}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Keeping a light, clean background */
+        body { font-family: 'Inter', sans-serif; background-color: #f4f7fa; }
+        /* Style for the custom navigation logo/text */
+        .tilli-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+            color: #0369a1; /* Sky-700 / Deep Blue */
+        }
+        .tilli-logo span {
+            color: #334155; /* Slate-700 / Gray text for "Lite Platform" */
+            font-weight: 400;
+            font-size: 1.1rem;
+            margin-left: 0.25rem;
+        }
+    </style>
+</head>
+<body>
+    <header class="bg-white text-gray-800 shadow-md sticky top-0 z-10">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="tilli-logo">Tilli-Lite Platform</h1>
+            <nav>
+                <ul class="flex space-x-6 items-center">
+                    {% if current_user.is_authenticated %}
+                        {% if current_user.role == 'customer' %}
+                            <li><a href="{{ url_for('main.dashboard') }}" class="text-sm font-semibold text-gray-600 hover:text-sky-600 transition tracking-wide">Dashboard (<span class="font-bold text-sky-700">tilliX</span>)</a></li>
+                            <li><a href="{{ url_for('main.bill_list') }}" class="text-sm font-semibold text-gray-600 hover:text-sky-600 transition tracking-wide">Bills & Payments (<span class="font-bold text-sky-700">Monay</span>)</a></li>
+                            <li><a href="{{ url_for('main.profile') }}" class="text-sm font-semibold text-gray-600 hover:text-sky-600 transition tracking-wide">Profile (<span class="font-bold text-sky-700">Nudge Setup</span>)</a></li>
+                        {% else %}
+                            <li><span class="text-gray-400 text-sm font-semibold">Admin View</span></li>
+                        {% endif %}
+                        <li><a href="{{ url_for('main.logout') }}" class="bg-red-600 hover:bg-red-700 text-white font-semibold py-1 px-3 rounded-lg text-sm transition shadow-md">Logout</a></li>
+                    {% else %}
+                        <li><a href="{{ url_for('main.about') }}" class="text-gray-600 hover:text-sky-600 transition">About</a></li>
+                        <li><a href="{{ url_for('main.register') }}" class="text-gray-600 hover:text-sky-600 transition">Register</a></li>
+                        <li><a href="{{ url_for('main.login') }}" class="bg-sky-600 hover:bg-sky-700 text-white font-semibold py-1 px-4 rounded-lg transition shadow-md">Login</a></li>
+                        <li><a href="{{ url_for('main.index') }}" class="text-gray-600 hover:text-sky-600 transition">Home</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-10">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="mb-6">
+                    {% for category, message in messages %}
+                        <div class="p-4 mb-3 rounded-xl text-base font-medium shadow-md {% if category == 'success' %}bg-green-100 text-green-700{% elif category == 'danger' %}bg-red-100 text-red-700{% else %}bg-sky-100 text-sky-700{% endif %}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="mt-20 py-6 text-center text-gray-500 text-sm border-t border-gray-200 bg-white">
+        Portfolio Project by [Manikanta Boyi] | Tilli-Lite Integrated Platform Demo
+    </footer>
+</body>
+</html>

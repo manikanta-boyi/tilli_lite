@@ -1,0 +1,54 @@
+
+
+.DS_Store
+.vscode/
+Thumbs.db
+
+
+
+
+
+/venv
+/env
+*.pyc
+pycache/
+
+Python build artifacts
+
+*.egg-info/
+dist/
+build/
+
+===============================================
+
+Dependency Management (if using requirements.txt)
+
+===============================================
+
+pip-log.txt
+pip-delete-this-log.txt
+
+===============================================
+
+Configuration & Secrets (CRITICAL SECURITY)
+
+===============================================
+
+Database File 
+
+This prevents accidentally committing user data.
+
+.db
+/instance/.db
+
+Log files
+
+*.log
+
+Sensitive environment variables or config files
+
+If you ever create a separate file for secrets like your SECRET_KEY or DB connection strings
+
+.env
+.flaskenv
+config.pyc

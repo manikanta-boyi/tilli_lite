@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="text-center py-16 bg-white rounded-xl shadow-2xl border border-sky-100">
+    <h2 class="text-5xl font-extrabold text-gray-900 mb-6 tracking-tight">The Integrated Enterprise Platform.</h2>
+    <p class="text-2xl text-gray-600 mb-10 max-w-3xl mx-auto">
+        Unify your Customer Portal, Financial Services, and Communications into a single, seamless experience with Tilli-Lite.
+    </p>
+    
+    <!-- Feature Highlights -->
+    <div class="flex justify-center flex-wrap gap-8 mb-12">
+        <div class="flex flex-col items-center p-4 rounded-lg bg-sky-50/50 hover:bg-sky-100 transition duration-300 w-40">
+            <span class="text-4xl text-sky-600 mb-2">💡</span>
+            <p class="font-bold text-lg text-gray-800">tilliX</p>
+            <p class="text-sm text-gray-500">Customer Portal</p>
+        </div>
+        <div class="flex flex-col items-center p-4 rounded-lg bg-sky-50/50 hover:bg-sky-100 transition duration-300 w-40">
+            <span class="text-4xl text-sky-600 mb-2">💳</span>
+            <p class="font-bold text-lg text-gray-800">Monay</p>
+            <p class="text-sm text-gray-500">Payments & Billing</p>
+        </div>
+        <div class="flex flex-col items-center p-4 rounded-lg bg-sky-50/50 hover:bg-sky-100 transition duration-300 w-40">
+            <span class="text-4xl text-sky-600 mb-2">💬</span>
+            <p class="font-bold text-lg text-gray-800">Nudge</p>
+            <p class="text-sm text-gray-500">Personalized Comms</p>
+        </div>
+    </div>
+    
+    <!-- Calls to Action -->
+    <div class="space-x-4">
+        <a href="{{ url_for('main.login') }}" class="inline-block bg-sky-600 hover:bg-sky-700 text-white text-xl font-bold py-3 px-10 rounded-full shadow-xl transition transform hover:scale-105 hover:shadow-2xl">
+            Customer Login
+        </a>
+        <a href="{{ url_for('main.register') }}" class="inline-block border border-sky-600 text-sky-600 hover:bg-sky-50 text-xl font-bold py-3 px-10 rounded-full transition transform hover:scale-105">
+            Register Now
+        </a>
+    </div>
+</div>
+{% endblock %}

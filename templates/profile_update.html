@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="bg-white p-8 rounded-xl shadow-xl max-w-xl mx-auto">
+    <h2 class="text-3xl font-bold text-gray-900 mb-6 border-b pb-3">tilliX Profile & Nudge Preference</h2>
+    <p class="text-gray-600 mb-6">Update your account details and select your preferred communication channel for Nudge alerts.</p>
+
+    <form method="POST" class="space-y-4">
+        {{ form.hidden_tag() }}
+
+        <!-- Full Name -->
+        <div>
+            {{ form.full_name.label(class="block text-sm font-medium text-gray-700") }}
+            {{ form.full_name(class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2") }}
+            {% for error in form.full_name.errors %}
+                <span class="text-red-500 text-xs">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <!-- Billing Address -->
+        <div>
+            {{ form.billing_address.label(class="block text-sm font-medium text-gray-700") }}
+            {{ form.billing_address(class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2") }}
+            {% for error in form.billing_address.errors %}
+                <span class="text-red-500 text-xs">{{ error }}</span>
+            {% endfor %}
+        </div>
+        
+        <!-- Nudge Communication Preference -->
+        <div class="border p-4 rounded-lg bg-sky-50">
+            <h3 class="text-lg font-semibold text-sky-800 mb-2">Nudge Settings</h3>
+            {{ form.comm_preference.label(class="block text-sm font-medium text-gray-700") }}
+            {{ form.comm_preference(class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2") }}
+            {% for error in form.comm_preference.errors %}
+                <span class="text-red-500 text-xs">{{ error }}</span>
+            {% endfor %}
+            <p class="text-xs text-gray-500 mt-1">This preference dictates which simulated channel (Email or SMS) is logged in the Nudge system.</p>
+        </div>
+
+        <div class="pt-4">
+            {{ form.submit(class="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-sky-600 hover:bg-sky-700 transition cursor-pointer") }}
+        </div>
+    </form>
+</div>
+{% endblock %}
