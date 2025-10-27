@@ -27,13 +27,26 @@
     </div>
     
     <!-- Calls to Action -->
-    <div class="space-x-4">
+    <div class="space-x-4 mb-10">
         <a href="{{ url_for('main.login') }}" class="inline-block bg-sky-600 hover:bg-sky-700 text-white text-xl font-bold py-3 px-10 rounded-full shadow-xl transition transform hover:scale-105 hover:shadow-2xl">
             Customer Login
         </a>
         <a href="{{ url_for('main.register') }}" class="inline-block border border-sky-600 text-sky-600 hover:bg-sky-50 text-xl font-bold py-3 px-10 rounded-full transition transform hover:scale-105">
             Register Now
         </a>
+    </div>
+
+    <!-- Demo Credentials Section -->
+    <div class="max-w-md mx-auto bg-sky-50 border border-sky-100 rounded-xl shadow-md p-6 text-left">
+        <h3 class="text-lg font-semibold text-sky-700 mb-2 text-center">🔑 Demo Access</h3>
+        <p class="text-sm text-gray-600 mb-3 text-center">You can explore the platform using the demo account below:</p>
+        <div class="bg-white p-4 rounded-lg border border-gray-200 text-sm text-gray-700">
+            <p><strong>Username:</strong> demo_customer</p>
+            <p><strong>Password:</strong> password</p>
+        </div>
+        <p class="text-xs text-gray-500 mt-3 text-center">
+            *For demo purposes only — no real data is stored.*
+        </p>
     </div>
 </div>
 {% endblock %}
